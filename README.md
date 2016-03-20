@@ -1,7 +1,7 @@
 # Bench v1.0.0
 
 Think of this as a more powerful alternative to the `time` command.  Use this
-command-line tool to benchmark a command using Haskell's @criterion@ library.
+command-line tool to benchmark a command using Haskell's `criterion` library.
 
 Key features:
 
