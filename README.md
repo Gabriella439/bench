@@ -42,6 +42,14 @@ time                 1.003 s    (1.002 s .. 1.003 s)
 mean                 1.003 s    (1.003 s .. 1.003 s)
 std dev              92.92 μs   (0.0 s .. 101.8 μs)
 variance introduced by outliers: 19% (moderately inflated)
+
+$ bench true
+benchmarking true
+time                 410.3 μs   (382.3 μs .. 443.3 μs)
+                     0.974 R²   (0.961 R² .. 0.987 R²)
+mean                 420.7 μs   (406.8 μs .. 435.7 μs)
+std dev              47.69 μs   (40.09 μs .. 57.91 μs)
+variance introduced by outliers: 81% (severely inflated)
 ```
 
 All output from the command being benchmarked is discarded
