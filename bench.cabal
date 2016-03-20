@@ -1,0 +1,32 @@
+name:                bench
+version:             1.0.0
+synopsis:            Command-line benchmark tool
+description:         Think of this as a more powerful alternative to the @time@
+                     command.  Use this command-line tool to benchmark a command
+                     using Haskell's @criterion@ library.
+homepage:            http://github.com/Gabriel439/bench
+bug-reports:         https://github.com/Gabriel439/bench/issues
+license:             BSD3
+license-file:        LICENSE
+author:              Gabriel Gonzalez
+maintainer:          Gabriel439@gmail.com
+copyright:           2016 Gabriel Gonzalez
+category:            System
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:
+    README.md
+source-repository head
+    type: git
+    location: https://github.com/Gabriel439/bench
+
+executable bench
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  build-depends:       base      >= 4.5     && < 5
+                     , criterion >= 1.0.0.1 && < 1.2
+                     , text                    < 1.3
+                     , silently  >= 1.1.1   && < 1.3
+                     , turtle    >= 1.2.5   && < 1.3
+  ghc-options:         -Wall -O2 -threaded
