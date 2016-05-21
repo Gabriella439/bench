@@ -1,4 +1,4 @@
-# Bench v1.0.0
+# Bench v1.0.1
 
 Think of this as a more powerful alternative to the `time` command.  Use this
 command-line tool to benchmark a command using Haskell's `criterion` library.
