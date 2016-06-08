@@ -1,7 +1,8 @@
 # Bench v1.0.1
 
-Think of this as a more powerful alternative to the `time` command.  Use this
-command-line tool to benchmark a command using Haskell's `criterion` library.
+This project provides the `bench` command-line tool, which is a more powerful
+alternative to the `time` command.  Use `bench` to benchmark a command using
+Haskell's `criterion` library.
 
 Key features:
 
@@ -13,26 +14,25 @@ Key features:
 
 ## Quick Start
 
-First, download the
-[Haskell toolchain](https://www.haskell.org/downloads#minimal), which provides
-the `stack` build tool.
+You can download a pre-built binary for OS X on the releases page:
 
-You will also need to download [git](https://git-scm.com/downloads) if you
-haven't done so already.
+* https://github.com/Gabriel439/bench/releases
 
-Then run the following commands from a terminal to build and install the `bench`
-tool:
+... or you can install `bench` using Haskell's `stack` tool.  To do that, first
+download the [Haskell toolchain](https://www.haskell.org/downloads#minimal),
+which provides the `stack` tool, then run:
 
 ```bash
-$ git clone https://github.com/Gabriel439/bench.git
-$ cd bench
-$ stack install
+$ stack setup
+$ stack install bench
 ```
 
 `stack install` will install `bench` to `~/.local/bin` or something similar.
 Make sure that the installation directory is on your executable search path
-before running the following command.  `stack` will remind you to do this if you
-forget.
+before running `bench`.  `stack` will remind you to do this if you forget.
+
+Once you've installed `bench` (either by download or installation via `stack`),
+you can begin benchmarking programs:
 
 ```bash
 $ bench 'sleep 1'  # Don't forget to quote the command line
@@ -53,6 +53,24 @@ variance introduced by outliers: 81% (severely inflated)
 ```
 
 All output from the command being benchmarked is discarded
+
+You can also output an HTML file graphing the distribution of
+timings by using the `--output` flag:
+
+```bash
+$ bench 'ls /usr/bin | wc -l' --output example.html
+benchmarking ls /usr/bin | wc -l
+time                 6.716 ms   (6.645 ms .. 6.807 ms)
+                     0.999 R²   (0.999 R² .. 0.999 R²)
+mean                 7.005 ms   (6.897 ms .. 7.251 ms)
+std dev              462.0 μs   (199.3 μs .. 809.2 μs)
+variance introduced by outliers: 37% (moderately inflated)
+```
+
+... and if you open that page in your browser you will
+get something that looks like this:
+
+![](http://i.imgur.com/2MCKBc2.png)
 
 ## Usage
 
