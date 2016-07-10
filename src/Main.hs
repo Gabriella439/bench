@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE RecordWildCards    #-}
 
 module Main where
 
@@ -21,7 +22,7 @@ data Cmd
     deriving (Show)
 
 instance Read Cmd where
-    readsPrec d t  =
+    readsPrec _ t  =
         -- First attempt to read Commands: ["cmd", "cmd", ...]
         case (Read.readMaybe t :: Maybe [Text]) of
             Just t' -> [(Commands t', "")]
@@ -43,22 +44,21 @@ main :: IO ()
 main = do
     o <- Turtle.options "Command-line tool to benchmark other programs" parser
     case (cmd o) of
-      Command command   -> benchCommand command (mode o)
-      Commands commands -> benchCommands commands (mode o)
+      Command command   -> benchCommand command o
+      Commands commands -> benchCommands commands o
 
-benchCommands :: [Text] -> Criterion.Mode -> IO ()
-benchCommands commands mode = do
-    let benches = map (\command -> buildBench command mode) commands
+benchCommands :: [Text] -> Options -> IO ()
+benchCommands commands opts@Options{..} = do
+    let benches = map (\command -> buildBench command opts) commands
     Criterion.runMode mode [Criterion.bgroup "bench" benches]
 
-benchCommand :: Text -> Criterion.Mode -> IO ()
-benchCommand command mode = do
-    let bench = buildBench command mode
+benchCommand :: Text -> Options -> IO ()
+benchCommand command opts@Options{..} = do
+    let bench = buildBench command opts
     Criterion.runMode mode [ bench ]
 
-
-buildBench :: Text -> Criterion.Mode -> Criterion.Benchmark
-buildBench command mode = do
+buildBench :: Text -> Options -> Criterion.Benchmark
+buildBench command Options{..} = do
     let io        = Turtle.shells command empty
     let benchmark = Criterion.nfIO (Silently.hSilence [IO.stdout, IO.stderr] io)
     let bench     = Criterion.bench (Text.unpack command) benchmark
