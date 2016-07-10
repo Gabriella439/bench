@@ -15,20 +15,22 @@ import qualified System.IO.Silently     as Silently
 import qualified Turtle
 
 data Options = Options
-    { command   :: Text
-    , mode      :: Criterion.Mode
-    }
+    { commands   :: [Text]
+    , mode       :: Criterion.Mode
+    } deriving (Show)
 
 parser :: Parser Options
 parser =
         Options
-    <$> Turtle.argText "command" "The command line to benchmark"
+    <$> Turtle.argRead "commands" "The command line to benchmark"
     <*> Criterion.parseWith Criterion.defaultConfig
 
 main :: IO ()
 main = do
+    putStrLn "hi"
     o <- Turtle.options "Command-line tool to benchmark other programs" parser
-    let io        = Turtle.shells (command o) empty
-    let benchmark = Criterion.nfIO (Silently.hSilence [IO.stdout, IO.stderr] io)
-    let name      = Text.unpack (command o)
-    Criterion.runMode (mode o) [ Criterion.bench name benchmark ]
+    print o
+    let ios       = map (\o' -> Turtle.shells o' empty) (commands o)
+    let benchmarks = map (\io -> Criterion.nfIO (Silently.hSilence [IO.stdout, IO.stderr] io)) ios
+    let benches    = map (\(command, benchmark) -> Criterion.bench (Text.unpack command) benchmark) $ zip (commands o) benchmarks
+    Criterion.runMode (mode o) [Criterion.bgroup "commands" benches]
