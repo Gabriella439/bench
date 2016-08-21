@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE RecordWildCards    #-}
 
 module Main where
 
@@ -15,20 +16,36 @@ import qualified System.IO.Silently     as Silently
 import qualified Turtle
 
 data Options = Options
-    { command   :: Text
-    , mode      :: Criterion.Mode
-    }
+    { cmd        :: [Text]
+    , mode       :: Criterion.Mode
+    } deriving (Show)
 
 parser :: Parser Options
 parser =
         Options
-    <$> Turtle.argText "command" "The command line to benchmark"
+    <$> some (Turtle.argText "command(s)" "The command line(s) to benchmark")
     <*> Criterion.parseWith Criterion.defaultConfig
 
 main :: IO ()
 main = do
     o <- Turtle.options "Command-line tool to benchmark other programs" parser
-    let io        = Turtle.shells (command o) empty
+    case (cmd o) of
+      [command] -> benchCommand command o
+      commands  -> benchCommands commands o
+
+benchCommands :: [Text] -> Options -> IO ()
+benchCommands commands opts@Options{..} = do
+    let benches = map (\command -> buildBench command opts) commands
+    Criterion.runMode mode [Criterion.bgroup "bench" benches]
+
+benchCommand :: Text -> Options -> IO ()
+benchCommand command opts@Options{..} = do
+    let bench = buildBench command opts
+    Criterion.runMode mode [ bench ]
+
+buildBench :: Text -> Options -> Criterion.Benchmark
+buildBench command Options{..} = do
+    let io        = Turtle.shells command empty
     let benchmark = Criterion.nfIO (Silently.hSilence [IO.stdout, IO.stderr] io)
-    let name      = Text.unpack (command o)
-    Criterion.runMode (mode o) [ Criterion.bench name benchmark ]
+    let bench     = Criterion.bench (Text.unpack command) benchmark
+    bench

@@ -52,7 +52,31 @@ std dev              47.69 μs   (40.09 μs .. 57.91 μs)
 variance introduced by outliers: 81% (severely inflated)
 ```
 
-All output from the command being benchmarked is discarded
+All output from the command being benchmarked is discarded.
+
+Multiple commands are also supported:
+
+```bash
+$ bench id ls "sleep 0.1"
+benchmarking bench/id
+time                 4.798 ms   (4.764 ms .. 4.833 ms)
+                     0.999 R²   (0.998 R² .. 1.000 R²)
+mean                 4.909 ms   (4.879 ms .. 4.953 ms)
+std dev              104.6 μs   (78.91 μs .. 135.7 μs)
+
+benchmarking bench/ls
+time                 2.941 ms   (2.889 ms .. 3.006 ms)
+                     0.996 R²   (0.992 R² .. 0.998 R²)
+mean                 3.051 ms   (3.015 ms .. 3.094 ms)
+std dev              129.7 μs   (104.3 μs .. 178.3 μs)
+variance introduced by outliers: 25% (moderately inflated)
+
+benchmarking bench/sleep 0.1
+time                 109.9 ms   (108.5 ms .. 111.0 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 109.2 ms   (108.5 ms .. 109.7 ms)
+std dev              903.0 μs   (676.4 μs .. 1.212 ms)
+```
 
 You can also output an HTML file graphing the distribution of
 timings by using the `--output` flag:
