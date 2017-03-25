@@ -75,4 +75,11 @@ script:
  - SRC_TGZ=$(cabal info . | awk '{print $2;exit}').tar.gz &&
    (cd dist && cabal install --force-reinstalls "$SRC_TGZ")
 
-# EOF
+deploy:
+  provider: releases
+  api_key:
+    secure: UVJQp/l0A5eD6UQFrDZrwjgMtIYjfRQfym/ZbO7iHgWxj0jzPjE++FToxkx0GoyNXuf/fiH7b/c5Q5krxdHgWQnvUp6raOSyHyaxCq8CbccP7/HdWB27K05qXXQpZNIfBLbvQyKGzwCtjDqbBIouxxx5r6mD3P+RAlqBGXP90kVBXiL2bnH8uZfCvSuK5RK0tM27jmPTsE0KjM+8BerB3hJyHTXtKhO5hZdE3mFMuh0Wae+HeJn99pLhvFSkJete2NkBCB1ztd7b/wVXzj54/5xNweeAC76QI3d4IZ/tTluAx7Hb7CkOQnF+XIlL9GJPIMKSkA/sXegIC3aQ3zn8es8yZorTxL/U52WyTIRuDY9KkQws4bpsWNu0zLexyqNghXQcnGvJrN1J2iV3OTExOvjcKjETz65UE1v9BPDZFxHIwxxUYB4oz64LYZ65Vt04G8YE/CiaEzoYN4ICCP8P+SMhvHYwFvObYh3OkqHZOIaRlyx2uLSzxLQ4rczIZsC01JE9bW+mXO2wJl5Titr6EWcua9P9Z5e+2Ykm8FKdNhoVpNMjtDjhg7w0BxRAUyC6WZVyP/MsEpz6HV+4PvikvqAHOVKzfsubrt74axp2/y4sdAu8wrdpYOLwb+upc0hREwYqMghd/FxkP5QBSld3jnlBZtVryyFzWPpQMN01w58=
+  file: dist/build/bench/bench
+  skip_cleanup: true
+  on:
+    tags: true
