@@ -6,8 +6,9 @@ module Main where
 import Control.Applicative
 import Data.Monoid ((<>))
 import Data.Text (Text)
-import Turtle (Parser, s, (%))
+import Turtle (ExitCode(..), Parser, ShellFailed(..), s, (%))
 
+import qualified Control.Exception
 import qualified Criterion
 import qualified Criterion.Main         as Criterion
 import qualified Criterion.Main.Options as Criterion
@@ -15,6 +16,7 @@ import qualified Data.Text              as Text
 import qualified Options.Applicative
 import qualified System.IO              as IO
 import qualified System.IO.Silently     as Silently
+import qualified System.Process
 import qualified Turtle
 
 version :: Text
@@ -57,7 +59,19 @@ benchCommand command mode = do
 
 buildBench :: Text -> Criterion.Benchmark
 buildBench command = do
-    let io        = Turtle.shells command empty
+    let createProcess =
+            (System.Process.shell (Text.unpack command))
+                { System.Process.std_in  = System.Process.NoStream
+                }
+
+    let io = do
+            exitCode <- Turtle.system createProcess empty
+            case exitCode of
+                ExitFailure _ -> do
+                    Control.Exception.throwIO (ShellFailed command exitCode)
+                _  -> do
+                    return ()
+
     let benchmark = Criterion.nfIO (Silently.hSilence [IO.stdout, IO.stderr] io)
-    let bench     = Criterion.bench (Text.unpack command) benchmark
-    bench
+
+    Criterion.bench (Text.unpack command) benchmark
