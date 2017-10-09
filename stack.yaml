@@ -1,3 +1,1 @@
-resolver: lts-5.8
-packages:
-- .
+resolver: lts-9.6

@@ -1,5 +1,5 @@
-{ mkDerivation, base, criterion, optparse-applicative, silently
-, stdenv, text, turtle
+{ mkDerivation, base, criterion, optparse-applicative, process
+, silently, stdenv, text, turtle
 }:
 mkDerivation {
   pname = "bench";
@@ -8,7 +8,7 @@ mkDerivation {
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [
-    base criterion optparse-applicative silently text turtle
+    base criterion optparse-applicative process silently text turtle
   ];
   homepage = "http://github.com/Gabriel439/bench";
   description = "Command-line benchmark tool";
