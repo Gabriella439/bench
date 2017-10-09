@@ -14,9 +14,11 @@ Key features:
 
 ## Quick Start
 
-You can download a pre-built binary for OS X on the releases page:
+You can install `bench` on macOS via [Homebrew](http://braumeister.org/formula/bench):
 
-* https://github.com/Gabriel439/bench/releases
+```bash
+$ brew install bench
+```
 
 ... or you can install `bench` using Haskell's `stack` tool.  To do that, first
 download the [Haskell toolchain](https://www.haskell.org/downloads#minimal),
