@@ -38,7 +38,7 @@ Another alternative is to use [Nix package manager](https://nixos.org/nix/). Aft
 ```$ nix-env -i bench```
 
 Once you've installed `bench` (either by download or installation via `stack` or Nix),
-you can begin benchmarking programs
+you can begin benchmarking programs:
 
 ```bash
 $ bench 'sleep 1'  # Don't forget to quote the command line
