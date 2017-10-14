@@ -33,7 +33,11 @@ $ stack install bench
 Make sure that the installation directory is on your executable search path
 before running `bench`.  `stack` will remind you to do this if you forget.
 
-Once you've installed `bench` (either by download or installation via `stack`),
+Another alternative is to use [Nix package manager](https://nixos.org/nix/). After its installation just execute:
+
+```$ nix-env -i bench```
+
+Once you've installed `bench` (either by download or installation via `stack` or Nix),
 you can begin benchmarking programs:
 
 ```bash
