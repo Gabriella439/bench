@@ -33,3 +33,4 @@ executable bench
                      , text                               < 1.3
                      , turtle               >= 1.2.5   && < 1.5
   ghc-options:         -Wall -O2 -threaded
+  other-modules:       Paths_bench
