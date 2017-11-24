@@ -13,14 +13,16 @@ import qualified Criterion
 import qualified Criterion.Main         as Criterion
 import qualified Criterion.Main.Options as Criterion
 import qualified Data.Text              as Text
+import qualified Data.Version
 import qualified Options.Applicative
+import qualified Paths_bench
 import qualified System.IO              as IO
 import qualified System.IO.Silently     as Silently
 import qualified System.Process
 import qualified Turtle
 
 version :: Text
-version = "1.0.2"
+version = Text.pack (Data.Version.showVersion Paths_bench.version)
 
 data Options = Options [Text] Criterion.Mode | Version deriving (Show)
 
