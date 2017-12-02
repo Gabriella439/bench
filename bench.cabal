@@ -1,5 +1,5 @@
 name:                bench
-version:             1.0.6
+version:             1.0.7
 synopsis:            Command-line benchmark tool
 description:         Think of this as a more powerful alternative to the @time@
                      command.  Use this command-line tool to benchmark a command

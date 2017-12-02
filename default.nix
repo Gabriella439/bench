@@ -3,7 +3,7 @@
 }:
 mkDerivation {
   pname = "bench";
-  version = "1.0.6";
+  version = "1.0.7";
   src = ./.;
   isLibrary = false;
   isExecutable = true;
