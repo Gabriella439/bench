@@ -14,6 +14,11 @@ let
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: {
           bench = haskellPackagesNew.callPackage ./default.nix { };
+
+          criterion =
+            pkgs.haskell.lib.addBuildDepend (pkgs.haskell.lib.appendConfigureFlag (haskellPackagesNew.callPackage ./criterion.nix { }) "-fembed-data-files") haskellPackagesOld.file-embed;
+
+          statistics = pkgs.haskell.lib.dontCheck (haskellPackagesOld.statistics_0_14_0_2);
         };
       };
     };
