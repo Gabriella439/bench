@@ -1,4 +1,4 @@
-resolver: lts-9.6
+resolver: lts-10.0
 packages:
 - .
 - location:
@@ -8,5 +8,3 @@ packages:
 flags:
   criterion:
     embed-data-files: true
-extra-deps:
-- statistics-0.14.0.2
