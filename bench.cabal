@@ -4,7 +4,7 @@ synopsis:            Command-line benchmark tool
 description:         Think of this as a more powerful alternative to the @time@
                      command.  Use this command-line tool to benchmark a command
                      using Haskell's @criterion@ library.
-homepage:            http://github.com/Gabriel439/bench
+homepage:            https://github.com/Gabriel439/bench
 bug-reports:         https://github.com/Gabriel439/bench/issues
 license:             BSD3
 license-file:        LICENSE
