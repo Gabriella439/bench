@@ -1,31 +1,29 @@
-# You can build this repository using Nix by running:
-#
-#     $ nix-build -A bench release.nix
-#
-# You can also open up this repository inside of a Nix shell by running:
-#
-#     $ nix-shell -A bench.env release.nix
-#
-# ... and then Nix will supply the correct Haskell development environment for
-# you
 let
+  fetchNixpkgs = import ./nix/fetchNixpkgs.nix;
+
+  nixpkgs = fetchNixpkgs {
+    rev = "804060ff9a79ceb0925fe9ef79ddbf564a225d47";
+
+    sha256 = "01pb6p07xawi60kshsxxq1bzn8a0y4s5jjqvhkwps4f5xjmmwav3";
+
+    outputSha256 = "0ga345hgw6v2kzyhvf5kw96hf60mx5pbd9c4qj5q4nan4lr7nkxn";
+  };
+
   config = {
     packageOverrides = pkgs: {
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: {
-          bench = haskellPackagesNew.callPackage ./default.nix { };
+          bench = haskellPackagesNew.callPackage ./nix/bench.nix { };
 
           criterion =
-            pkgs.haskell.lib.addBuildDepend (pkgs.haskell.lib.appendConfigureFlag (haskellPackagesNew.callPackage ./criterion.nix { }) "-fembed-data-files") haskellPackagesOld.file-embed;
-
-          statistics = pkgs.haskell.lib.dontCheck (haskellPackagesOld.statistics_0_14_0_2);
+            pkgs.haskell.lib.addBuildDepend (pkgs.haskell.lib.appendConfigureFlag haskellPackagesOld.criterion_1_4_0_0 "-fembed-data-files") haskellPackagesOld.file-embed;
         };
       };
     };
   };
 
   pkgs =
-    import <nixpkgs> { inherit config; };
+    import nixpkgs { inherit config; };
 
 in
   { bench = pkgs.haskellPackages.bench;
