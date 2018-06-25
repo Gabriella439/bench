@@ -96,17 +96,17 @@ buildBench maybeBefore maybeAfter command = do
 
     let benchmark' = case (maybeBefore, maybeAfter) of
             (Just before_, Just after_) ->
-                Criterion.envWithCleanup
+                Criterion.perRunEnvWithCleanup
                     (io before_)
                     (\_ -> io after_)
                     (\_ -> benchmark)
             (Just before_, Nothing) ->
-                Criterion.envWithCleanup
+                Criterion.perRunEnvWithCleanup
                     (io before_)
                     (\_ -> return ())
                     (\_ -> benchmark)
             (Nothing, Just after_) ->
-                Criterion.envWithCleanup
+                Criterion.perRUnEnvWithCleanup
                     (return ())
                     (\_ -> io after_)
                     (\_ -> benchmark)
