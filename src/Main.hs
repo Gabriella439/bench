@@ -40,7 +40,7 @@ after :: Parser Text
 after =
     Options.Applicative.strOption
         (   Options.Applicative.long "after"
-        <>  Options.Applicative.help "Specify a command to run before after run of the benchmark"
+        <>  Options.Applicative.help "Specify a command to run after each run of the benchmark"
         <>  Options.Applicative.metavar "command"
         )
 
