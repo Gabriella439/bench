@@ -90,27 +90,23 @@ buildBench maybeBefore maybeAfter command = do
                 _  -> do
                     return ()
 
-    let benchmarkable = Criterion.nfIO (io command)
-
-    let benchmark = Criterion.bench (Text.unpack command) benchmarkable
-
-    let benchmark' = case (maybeBefore, maybeAfter) of
+    let benchmarkable = case (maybeBefore, maybeAfter) of
             (Just before_, Just after_) ->
                 Criterion.perRunEnvWithCleanup
                     (io before_)
                     (\_ -> io after_)
-                    (\_ -> benchmark)
+                    (\_ -> io command)
             (Just before_, Nothing) ->
                 Criterion.perRunEnvWithCleanup
                     (io before_)
                     (\_ -> return ())
-                    (\_ -> benchmark)
+                    (\_ -> io command)
             (Nothing, Just after_) ->
-                Criterion.perRUnEnvWithCleanup
+                Criterion.perRunEnvWithCleanup
                     (return ())
                     (\_ -> io after_)
-                    (\_ -> benchmark)
+                    (\_ -> io command)
             (Nothing, Nothing) ->
-                benchmark
+                Criterion.nfIO (io command)
 
-    benchmark'
+    Criterion.bench (Text.unpack command) benchmarkable
