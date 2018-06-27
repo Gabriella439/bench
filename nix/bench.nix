@@ -4,13 +4,13 @@
 mkDerivation {
   pname = "bench";
   version = "1.0.9";
-  src = ./.;
+  src = ./..;
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [
     base criterion optparse-applicative process silently text turtle
   ];
-  homepage = "http://github.com/Gabriel439/bench";
+  homepage = "https://github.com/Gabriel439/bench";
   description = "Command-line benchmark tool";
   license = stdenv.lib.licenses.bsd3;
 }
