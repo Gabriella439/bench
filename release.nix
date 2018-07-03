@@ -9,15 +9,23 @@ let
     outputSha256 = "0ga345hgw6v2kzyhvf5kw96hf60mx5pbd9c4qj5q4nan4lr7nkxn";
   };
 
+  readDirectory = import ./nix/readDirectory.nix;
+
   config = {
     packageOverrides = pkgs: {
       haskellPackages = pkgs.haskellPackages.override {
-        overrides = haskellPackagesNew: haskellPackagesOld: {
-          bench = haskellPackagesNew.callPackage ./nix/bench.nix { };
+        overrides =
+          let
+            directoryOverrides = readDirectory ./nix;
 
-          criterion =
-            pkgs.haskell.lib.addBuildDepend (pkgs.haskell.lib.appendConfigureFlag haskellPackagesOld.criterion_1_4_0_0 "-fembed-data-files") haskellPackagesOld.file-embed;
-        };
+            manualOverrides =
+              haskellPackagesNew: haskellPackagesOld: {
+                criterion =
+                  pkgs.haskell.lib.addBuildDepend (pkgs.haskell.lib.appendConfigureFlag haskellPackagesOld.criterion_1_4_0_0 "-fembed-data-files") haskellPackagesOld.file-embed;
+              };
+
+          in
+            pkgs.lib.composeExtensions directoryOverrides manualOverrides;
       };
     };
   };
