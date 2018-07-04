@@ -13,7 +13,6 @@ maintainer:          Gabriel439@gmail.com
 copyright:           2016 Gabriel Gonzalez
 category:            System
 build-type:          Simple
-tested-with:         GHC == 7.10.2
 cabal-version:       >=1.10
 extra-source-files:
     README.md
