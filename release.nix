@@ -21,7 +21,7 @@ let
             manualOverrides =
               haskellPackagesNew: haskellPackagesOld: {
                 criterion =
-                  pkgs.haskell.lib.addBuildDepend (pkgs.haskell.lib.appendConfigureFlag haskellPackagesOld.criterion_1_4_0_0 "-fembed-data-files") haskellPackagesOld.file-embed;
+                  pkgs.haskell.lib.dontCheck (pkgs.haskell.lib.addBuildDepend (pkgs.haskell.lib.appendConfigureFlag haskellPackagesOld.criterion_1_4_0_0 "-fembed-data-files") haskellPackagesOld.file-embed);
               };
 
           in
