@@ -49,8 +49,7 @@ parser =
             Version
         <$  Options.Applicative.flag'
                 ()
-                (   Options.Applicative.short 'v'
-                <>  Options.Applicative.long "version"
+                (   Options.Applicative.long "version"
                 <>  Options.Applicative.help "Version number"
                 )
     <|>     Options
