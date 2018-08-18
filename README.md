@@ -1,4 +1,4 @@
-# Bench v1.0.11
+# Bench v1.0.12
 
 This project provides the `bench` command-line tool, which is a more powerful
 alternative to the `time` command.  Use `bench` to benchmark a command using
