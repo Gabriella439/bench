@@ -1,10 +1,9 @@
 resolver: lts-10.0
 packages:
-- .
-- location:
-    git: https://github.com/bos/criterion.git
+  - .
+extra-deps:
+  - git: https://github.com/bos/criterion.git
     commit: bea91eae7a6c0d4246045f27c9462ea6d138591a
-  extra-dep: true
 flags:
   criterion:
     embed-data-files: true
