@@ -14,6 +14,7 @@ import qualified Criterion.Main         as Criterion
 import qualified Criterion.Main.Options as Criterion
 import qualified Data.Text              as Text
 import qualified Data.Version
+import qualified GHC.IO.Encoding        as Encoding
 import qualified Options.Applicative
 import qualified Paths_bench
 import qualified System.IO              as IO
@@ -61,7 +62,10 @@ parser =
 
 main :: IO ()
 main = do
+    Encoding.setLocaleEncoding Encoding.utf8
+
     x <- Turtle.options "Command-line tool to benchmark other programs" parser
+
     case x of
         Options maybeBefore maybeAfter commands mode -> do
             let benches = map (buildBench maybeBefore maybeAfter) commands
