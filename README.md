@@ -146,7 +146,7 @@ tell.
 
 ## License (BSD 3-clause)
 
-Copyright Gabriel Gonzalez (c) 2016
+Copyright Gabriella Gonzalez (c) 2016
 
 All rights reserved.
 
