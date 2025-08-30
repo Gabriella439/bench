@@ -20,6 +20,12 @@ You can install `bench` on macOS via [Homebrew](http://braumeister.org/formula/b
 $ brew install bench
 ```
 
+on Fedora or RedHat-based distros via DNF:
+
+```bash
+$ dnf install bench
+```
+
 ... or you can install `bench` using Haskell's `stack` tool.  To do that, first
 download the [Haskell toolchain](https://www.haskell.org/downloads#minimal),
 which provides the `stack` tool, then run:
